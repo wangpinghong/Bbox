@@ -1,0 +1,583 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <link href="css/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css" />
+  <!-- Export CSS  -->
+  <style>
+	<!--CSS:login-->
+		html,body{
+		  width:100%;
+		  height:100%;
+		  padding:0;
+		  margin:0;
+		}
+		.title {
+		   white-space: normal !important;
+		   position:relative;
+		   left:-20px;
+		}
+		.field1{
+		  margin:20;
+		}
+		#login{
+		  height:100%;
+		  background:url('img/login_bg.jpg');
+		  background-size:cover;
+		  position:relative;
+		  text-align:center;
+		}
+		
+		#loginBtn{
+		  margin-top:60%;
+		  border-radius:10px;
+		  background-color:#EEEED1;
+		  -webkit-border-radius: 20px;
+		  -webkit-box-shadow: inset #ccc 0 0 30px;
+		}
+		#registerBtn{
+		  margin-top:10px;
+		  border-radius:10px;
+		  background-color:#EEEED1;
+		  -webkit-border-radius: 20px;
+		  -webkit-box-shadow: inset #ccc 0 0 30px;
+		}
+		#books h3{
+		  margin-bottom:-10px;
+		}
+		#search{
+		  margin:0;
+		}
+	<!--CSS:mainfunction-->
+		.contact {
+		  font-family: 'Meiryo';
+		}
+		.phone 
+		{
+		  font-family: 'Meiryo';
+		}
+		.button08 {
+		  -webki
+		t-border-radius: 20px;
+		}
+		.ui-btn {
+		  font-family:
+		 '微軟正黑體';
+		}
+		#doghead {
+		  position:absolute; 
+		  top:50%;
+		  left:15%;
+		}
+		#dogbody {
+		  position:absolute;
+		  top:62%;
+		  left:25%;
+		}
+	<!-- CSS:setting-->
+		#setting-content{
+		  text-align:center;
+		}
+	<!-- CSS:personbbox-->
+		.activity-button01{
+		  width: 15px;
+		  height: 15px;
+		  background: url(img/personbbox_back_btn.png) center center no-repeat!important;
+		  background-size: 80%!important;
+		  margin: 0 15px 0 15px;
+		}
+	<!-- CSS:personinfo-->
+		.personinfo-username {
+		  font-family:'Meiryo';
+		}
+		.personinfo-userphone {
+		  font-family:'Meiryo';
+		}
+		.personinfo-contact {
+		  font-family: 'Meiryo';
+		}
+		.personinfo-phone {
+		  font-family: 'Meiryo';
+		}
+		.ui-btn {
+		  font-family: '微軟正黑體';
+		   -webkit-border-radius: 15px;
+		}
+		.personinfo-button05 {
+		  width: 80px;
+		  -webkit-border-radius: 20px;
+		  display: inline-block;
+		  font-family:'微軟正黑體';
+		}
+	<!--CSS:home-->
+		div{
+		 box-sizing:border-box; 
+		}
+		th{
+		  background:#ddd;
+		}
+		.ui-content{
+		  padding:10px;
+		}
+		div[data-role="header"],div[data-role="footer"]{
+		  box-shadow:0 0 10px #000;
+		}
+		li{
+		  margin-bottom:-9px!important;
+		}
+		li a{
+		  height:36px;
+		  line-height:28px!important;
+		  margin-top:-1px!important;
+		}
+		#left-menu span{
+		  width:100%;
+		  text-align:center;
+		  height:50px;
+		  line-height:50px;
+		  display:block;
+		  color:#8cf;
+		  font-size:20px;
+		  font-weight:bold;
+	<!--CSS:news-->
+		.ui-content {
+		padding: 0;
+		margin-top: -15px;
+		}
+	</style>
+  <script src="js/jquery.min.js"></script>
+  <script>
+    
+  </script>
+  <script src="js/jquery.mobile-1.4.5.min.js"></script>
+  <!-- Uncomment the following to include cordova in your android project -->
+  <!--<script src="js/cordova.js"></script>-->
+  <!-- GK Loader use RequireJS to load module -->
+  <script src="js/require.js"></script>
+  <!--Plug in GK-->
+	<script src="phonegap.js"></script>
+  <script src="js/jquery.gk.min.js"></script>
+  <!-- Load GK components -->
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.min.js"></script>
+  <!-- Uncomment the following to include cordova in your android project -->
+  <!-- script for facebook login -->
+		  <script>
+		  window.fbAsyncInit = function() {
+		    FB.init({
+		      appId      : '1586463518292827',
+		      xfbml      : true,
+		      version    : 'v2.3'
+		    });
+		  };
+		
+		  (function(d, s, id){
+		     var js, fjs = d.getElementsByTagName(s)[0];
+		     if (d.getElementById(id)) {return;}
+		     js = d.createElement(s); js.id = id;
+		     js.src = "//connect.facebook.net/en_US/sdk.js";
+		     fjs.parentNode.insertBefore(js, fjs);
+		   }(document, 'script', 'facebook-jssdk'));
+		</script>
+		<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '{your-app-id}',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.2' // use version 2.2
+  });
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+  
+</script>
+			
+  <script type="text/javascript" src="http://connect.facebook.net/zh_TW/all.js"></script>
+  <!--<script src="js/cordova.js"></script>-->
+  <!-- Export JS  -->
+  <title>Black Box</title>
+</head>
+
+<body>
+  <!-- Page: login  -->
+  	<div
+	  class="fb-like"
+	  data-share="true"
+	  data-width="450"
+	  data-show-faces="true">
+	</div>
+	  <div id="login" data-role="page">
+		<div role="main" class="ui-content">
+		<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+		<div id="status"></div>
+		  <a id="loginBtn" class="ui-btn button04" href="#home">FB登入</a>
+		  <a id="registerBtn" class="ui-btn button04" href="">線上註冊</a>
+		</div>
+	  </div>
+  <!-- Page:mainfunction-->
+	  <div id="mainfunction" data-role="page" style="background:url(img/mainfunc2_bg.jpg); background-size:100% 100%;">
+	  <div data-role="header" data-position="fixed" data-theme="a">
+			  <h3>Black Box</h3>
+			  <a class="ui-btn ui-btn-left ui-corner-all ui-shadow" style="color:#808080;" href="#home">back</a>
+			</div>
+		  <div role="main" class="ui-content">
+			<div data-role="footer" data-position="fixed" data-theme="a">
+			  <h3>Demo</h3>
+			</div>
+			<img id="dogbody" src="http://i.imgur.com/yS49zqo.gif?1" is="image" height="140" width="210">
+			<img id="doghead" src="http://i.imgur.com/gDkTQmx.gif?1" is="image" height="200" width="280">
+		  </div>
+	   </div>
+  <!-- Page:setting-->
+	  <div id="setting" data-role="page" data-theme="a" style="background:url(img/setting_bg.jpg);background-size:100% 100%; ">
+		<div data-role="header" data-position="fixed" data-fullscreen="false"  data-theme="a">
+		  <h3>設定</h3>
+		  <a class="ui-btn ui-btn-left ui-corner-all ui-shadow" style="color:#808080;" href="#home">back</a>
+		</div>
+		<div role="main" class="ui-content"  id="setting-content">
+		  <div class="ui-field-contain">
+			<label for="gk-411EbxO" style:"text-align:center; ">聲音</label>
+			<input type="checkbox" data-role="flipswitch" id="gk-411EbxO" style:"width:50%;">
+		  </div>
+		  <div class="ui-field-contain">
+			<label for="gk-411OLwT" style:"text-align:center;">通知</label>
+			<input type="checkbox" data-role="flipswitch" id="gk-411OLwT" style:"width:50%;">
+		  </div>
+		  <div class="ui-field-contain">
+			<label for="gk-411qWiS" style:"text-align:center;">行駛時自動切換模式</label>
+			<input type="checkbox" data-role="flipswitch" id="gk-411qWiS" style:"width:50%;">
+		  </div>
+		  <div class="ui-field-contain">
+			<label for="gk-411krYg" style:"text-align:center; ">行駛時自動省電模式</label>
+			<input type="checkbox" data-role="flipswitch" id="gk-411krYg" style:"width:50%;">
+		  </div>
+		</div>
+		<div data-role="footer" data-position="fixed" data-theme="a">
+				<h3>demo</h3>
+		</div>
+	  </div>
+    <!-- Page: personinfo  -->
+		  <div id="personinfo" data-role="page" data-theme="b">
+			<div data-role="header" data-position="fixed" data-theme="a">
+			  <h3>個人資訊</h3>
+			  <a class="ui-btn ui-btn-left ui-corner-all ui-shadow" style="color:#808080;" href="#home">back</a>
+			</div>
+			<div role="main" class="personinfo-username" >
+			  <br>
+			  <div class="ui-field-contain">
+				<label for="gk-411IFJa">使用者姓名</label>
+				<input type="text" name id="gk-411IFJa">
+			  </div>
+			  <div class="personinfo-userphone">
+				<label for="gk-411ig0e">使用者電話</label>
+				<input type="text" name id="gk-411ig0e">
+			  </div>
+			  <div class="personinfo-contact">
+				<label for="gk-4112w0n">緊急聯絡人</label>
+				<input type="text" name id="gk-4112w0n">
+			  </div>
+			  <div class="personinfo-phone">
+				<label for="gk-4110BVn">緊急聯絡人電話</label>
+				<input type="text" name id="gk-4110BVn">
+			  </div>
+			</div>
+			<br>
+			<div class="ui-grid-a" style="height:95px">
+			  <div class="ui-block-a" style="height:100%">
+				<a class="ui-btn ui-mini ui-btn-icon-top personinfo-button05 ui-icon-edit">編輯</a>
+			  </div>
+			  <div class="ui-block-b" style="height:100%">
+				<a class="ui-btn ui-mini ui-btn-icon-top personinfo-button05 ui-icon-check">儲存</a>
+			  </div>
+			  </br>
+			  <a class="ui-btn ui-btn-center ui-icon-plus ui-btn-icon-right" >新增緊急聯絡人</a>
+			</div>
+			<div data-role="footer" data-position="fixed" data-theme="a">
+				<h3>demo</h3>
+			</div>
+		  </div>
+	<!-- Page:personbbox -->
+			<div id="personbbox" data-role="page" style="background:-webkit-linear-gradient(#c4dbf5 10%,#c4dbf5 30%,#c4dbf5">
+			<div data-role="header" data-position="fixed" data-theme="a">
+			  <h3>我的黑盒子</h3>
+			  <a class="ui-btn ui-btn-left ui-corner-all ui-shadow" style="color:#808080;" href="#home">back</a>
+			</div>
+		  <div data-role="content">
+			<ul data-role="listview" data-inset="true" id="daily_list" style="margin:0;">
+				  <li>
+					<a href="#dailycontent" data-transition="slide">2015年4月1日</a>
+				  </li>
+				  <li>
+					<a href="#dailycontent" data-transition="slide">2015年3月31日</a>
+				  </li>
+				  <li>
+					<a href="#dailycontent" data-transition="slide">2015年3月30日</a>
+				  </li>
+				  <li>
+					<a href="#dailycontent" data-transition="slide">2015年3月29日</a>
+				  </li>
+				  <li>
+					<a href="#dailycontent" data-transition="slide">2015年3月28日</a>
+				  </li>
+				</ul>
+			  </div>
+			  <div data-role="footer" data-position="fixed" data-theme="a">
+				<h3>demo</h3>
+			</div>
+			</div>
+	<!-- Page: news  -->
+		  <div id="news" data-role="page">
+			<div data-role="header" data-position="fixed" data-theme="a">
+
+			  <h3>最新消息</h3>
+			  <a class="ui-btn ui-btn-left ui-corner-all ui-shadow" style="color:#808080;" href="#home">back</a>
+			  </div>
+			  <div data-role="navbar" class="menu">
+				<ul>
+				  <li >
+					<a class data-theme="b">行車速度</a>
+				  </li>
+				  <li>
+					<a data-theme="b">施工/事件</a>
+				  </li>
+				  <li >
+					<a data-theme="b">其他資訊</a>
+				  </li>
+				</ul>
+			  </div>
+			  <div data-role="footer" data-position="fixed" data-theme="a">
+				<h3>demo</h3>
+			</div>
+			</div>
+<!-- Page: register  -->
+		 <div id="register" data-role="page" style="background:url('img/login_bg.jpg');">
+			<div data-theme="b" id="register-header" data-role="header">
+			  <h3>註冊</h3>
+			</div>
+			<div role="main" class="ui-content">
+			  <div class="ui-field-field1">
+				<label for="name">姓名</label>
+				<input name id="registername" type="text">
+			  </div>
+			  <div class="ui-field-field1">
+				<label for="phone">電話(帳號)</label>
+				<input name id="registerphone" type="text">
+			  </div>
+			  <div class="ui-field-field1">
+				<label for="password">密碼</label>
+				<input name id="registerpassword" type="password">
+			  </div>
+			  <div class="ui-field-field1">
+				<label for="passwordsure">確認密碼</label>
+				<input name id="registerpasswordsure" type="password">
+			  </div>
+			  <div class="ui-field-field1">
+				<label for="family">緊急聯絡人姓名</label>
+				<input name id="registerfamily" type="text">
+			  </div>
+			  <div is="fieldcontain" class="ui-field-field1">
+				<label for="familyphone">緊急聯絡人電話</label>
+				<input name id="registerfamilyphone" type="text">
+			  </div>
+			  <a class="ui-btn sendbtn" style="-webkit-border-radius:20px!important; background:-webkit-linear-gradient(#59d,#25a)!important; text-shadow:#009 0 0 20px!important; color:white;!important" id="start_order" data-transition="slide">確認</a>
+			  <a class="ui-btn ui-corner-all ui-shadow" style="color:#808080;" href="#home">back</a>
+			</div>
+		  </div>
+
+  <!-- Page: home -->
+		<div id="home" data-role="page" data-theme="a" style="background:-webkit-linear-gradient(#bff0f7 10%,#c4dbf5 30%,#e3e6ff)">
+		  <div class="ui-grid-b" >
+			<div class="ui-block-a" style="height:80%; margin-top:-20px;">
+			  <a href="#left-menu">
+				<img is="dragable" src="img/home_more_btn.png" style="width:35%; margin:30% 33% 30% 33%; text-align:center">
+			  </a>
+			  <h6 is="gk-text" style="text-align:center; margin-top:-20px;">更多</h6>
+			</div>
+			<div class="ui-block-b" style="height:100%"></div>
+			<div class="ui-block-c" style="height:100%; margin-top:-20px;">
+			  <a href="#errorpage">
+				<img is="dragable" src="img/home_cloud_btn.png" style="width:35%; margin:30% 33% 30% 33%">
+			  </a>
+			  <h6 is="gk-text" style="text-align:center; margin-top:-20px;">平台</h6>
+			</div>
+		  </div>
+		  <div class="ui-grid-b" style="height:60%; margin-top:-20px;">
+			<a href="#mainfunction">
+			  <img is="dragable" src="img/home_mainfunc_btn.png" style="width:56%; margin:25% 25% 22% 22%">
+			</a>
+		  </div>
+		  <div class="ui-grid-b" style="height:20%">
+			<div class="ui-block-a" style="height:100% ; margin-top:-10px;">
+			  <a href="#personinfo">
+				<img is="dragable" src="img/home_minibb_btn.png" style="width:33%; margin:30% 33% 30% 33%" href="#personbbox">
+			  </a>
+			  <h6 is="gk-text" style="text-align:center; margin-top:-30px;">我的黑盒子</h6>
+			</div>
+			<div class="ui-block-b" style="height:100%"></div>
+			<div class="ui-block-c" style="height:100% ; margin-top:-10px;">
+			  <a href="#setting">
+				<img is="dragable" src="img/home_setting_btn.png" style="width:27%; margin:33% 30% 30% 35%">
+			  </a>
+			  <h6 is="gk-text" style="text-align:center; margin-top:-30px;">設定</h6>
+			</div>
+		  </div>
+		  <div id="left-menu" data-role="panel" data-position="left" data-theme="b" data-display="push" style="font-family:'微軟正黑體';">
+			<span>更多</span>
+			<a class="ui-btn" data-theme="b" data-rel="close" href="#news">最新消息</a>
+			<a class="ui-btn" data-theme="b" data-rel="close" href="#errorpage">平台</a>
+			<a class="ui-btn" data-theme="b" data-rel="close" href="#personbbox">我的黑盒子</a>
+			<a class="ui-btn" data-theme="b" data-rel="close" href="#dealwaccident">交通事故處理</a>
+			<a class="ui-btn" data-theme="b" data-rel="close" href="#setting">設定</a>
+			<a class="ui-btn" data-theme="b" data-rel="close" href="#login" >登出</a>
+		  </div>
+		  <div role="main" class="ui-content"></div>
+		</div>
+		
+  <!-- Page: dailycontent -->
+		<div id="dailycontent" data-role="page">
+		  <div data-role="header" data-position="fixed" data-theme="b">
+			<h3>每日細節</h3>
+			<a class="ui-btn ui-btn-left" style="-webkit-border-radius:20px;" href="#personbbox" data-transition="slide" data-direction="reverse">back</a>
+		  </div>
+		  <div class="ui-content">
+			<div id="hero" style="font-size:20px; font-weight:bold; width:100%; text-align:center;"></div>
+			<div class="heroImg" id="hero1" style="display:none;">
+			  <img src="https://lh5.googleusercontent.com/-7PGZEz43F6k/Uwr7ZwlHhXI/AAAAAAAA3KA/AoQ_94R_2mc/s000/hero01.jpg" style="width:290px;">
+			</div>
+			<div class="heroImg" id="hero2" style="display:none;">
+			  <img src="https://lh3.googleusercontent.com/-287OGsdtwd0/Uwr7aw0NY-I/AAAAAAAA3Kc/DfWFNDE60fo/s000/hero02.jpg" style="width:290px;">
+			</div>
+			<div class="heroImg" id="hero3" style="display:none;">
+			  <img src="https://lh6.googleusercontent.com/-c2uIrTYnOkI/Uwr7Z7Q8qsI/AAAAAAAA3KE/N3ywjhpQdMQ/s000/hero03.jpg" style="width:290px;">
+			</div>
+			<div class="heroImg" id="hero4" style="display:none;">
+			  <img src="https://lh6.googleusercontent.com/-m1VT8zvDnoY/Uwr7aml1VfI/AAAAAAAA3KQ/OhWHx0a38Q4/s000/hero04.jpg" style="width:290px;">
+			</div>
+			<div class="heroImg" id="hero5" style="display:none;">
+			  <img src="https://lh5.googleusercontent.com/-0Hrixq2DLx0/Uwr7ap2oGKI/AAAAAAAA3KY/t2qcBeUYjk8/s000/hero05.jpg" style="width:290px;">
+			</div>
+		  </div>
+		</div>
+		
+	<!-- Page:dealwaccident -->
+			<div id="dealwaccident" data-role="page" style="background:url(img/dealwaccident_bg.png);background-size:100% 100%;">
+			<div data-role="header" data-position="fixed" data-theme="a">
+
+			  <h3>交通事故處理</h3>
+			  <a class="ui-btn ui-btn-left ui-corner-all ui-shadow" style="color:#808080;" href="#home">back</a>
+			  </div>
+			  <div role="main" class="ui-content" >
+				<div data-role="collapsibleset">
+				  <div data-role="collapsible">
+					<h3>爆胎處理</h3>
+					<a>1、保持直線行駛。如果是前胎爆裂，車身會出現向一側突然傾斜，汽車方向會跑偏或搖擺不定。此時駕車者不要慌張，應雙手緊握方向盤，儘量使汽車保持直線行駛。
+						2、調整車頭時動作輕柔。需要注意的是，在轉動方向盤時，動作要輕柔，不要慌張地反覆猛打方向盤，以免汽車出現強烈側滑甚至調頭。
+						3、慢慢減速。緩慢減速時，首先帶擋收油，當車身姿態可控時在逐級減擋，並反覆輕踩剎車，將汽車緩慢停下來。
+						4、打開警告燈。待情況基本穩定後，您需要打開轉向燈或駐車警告燈，讓汽車緩慢靠路邊停下。</a>
+				  </div>
+				  <div data-role="collapsible">
+					<h3>車禍處理</h3>
+					<a>一、車禍發生後，立即以「雙黃燈及三角牌告示後方來車避免追撞」，同時應在車身後方放置三角牌警告標誌，以免後車不注意追撞造成更多傷亡。
+						二、車主最好要做到「保留現場以利警方採證」警方趕到現場時，將依據車輛方位及現場掉落物繪製現場圖，做為未來肇責研判的依據，因此為保障車主自我權益請勿任意破壞現場。
+						三、如果有人員傷亡，速打一一九送醫急救，千萬勿使用肇事車輛移送傷患，救護車離開時記住詢問傷者姓名及送往的醫院。</a>
+				  </div>
+				  <div data-role="collapsible">
+					<h3>買車簽約小撇步</h3>
+					<a>買新車的時候，要記得，根據「汽車買賣定型化契約」規定，消費者有三天契約審閱期。也就是說，在雙方把合約內容都確定寫好了之後，消費者有權利帶回家慢慢審核，並且有三天可以去決定要不要簽約。除非完完全全沒有疑慮</a>
+				  </div>
+				  <div data-role="collapsible">
+					<h3>遠門前要注意</h3>
+					<a>六燈檢查：一個小小的動作，兩個人即可完成！請車主在發動車子後操作，請一位友人或是家人在車外檢查，檢查小燈、大燈、前後方向燈、前後霧燈、日行燈以及最重要的煞車燈，有任何一顆燈泡燒毀，都建議進廠維修，一顆小小的燈泡，可以助您在夜間行車更加平安！</a>
+				  </div>
+				</div>
+			  </div>
+			  <div data-role="footer" data-position="fixed" data-theme="a">
+				<h3>demo</h3>
+			</div>
+			</div>
+			
+<!-- Page:errorpage -->
+			<div id="errorpage" data-role="page" style="background:url(img/error_bg.jpg);background-size:100% 50%; background-repeat:no-repeat; background-position:center;">
+			  <div data-role="header" data-position="fixed" data-theme="a">
+			  <h3>平台</h3>
+			  <a class="ui-btn ui-btn-left ui-corner-all ui-shadow" style="color:#808080;" href="#home">back</a>
+			  </div>
+			  <div data-role="footer" data-position="fixed" data-theme="a">
+				<h3>demo</h3>
+			</div>
+			</div>
+</body>
+
+</html>
