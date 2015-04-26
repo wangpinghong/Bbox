@@ -112,25 +112,14 @@
 		  font-family:'微軟正黑體';
 		}
 	<!--CSS:home-->
-		div{
-		 box-sizing:border-box; 
+		#home-footer{
+			width: 100% ;
 		}
-		th{
-		  background:#ddd;
+		#left-menu{
+		width:40%;
 		}
-		.ui-content{
-		  padding:10px;
-		}
-		div[data-role="header"],div[data-role="footer"]{
-		  box-shadow:0 0 10px #000;
-		}
-		li{
-		  margin-bottom:-9px!important;
-		}
-		li a{
-		  height:36px;
-		  line-height:28px!important;
-		  margin-top:-1px!important;
+		#right-menu{
+		width:40%;
 		}
 		#left-menu span{
 		  width:100%;
@@ -141,11 +130,23 @@
 		  color:#8cf;
 		  font-size:20px;
 		  font-weight:bold;
+		  }
+		#right-menu span{
+		  width:100%;
+		  text-align:center;
+		  height:50px;
+		  line-height:50px;
+		  display:block;
+		  color:#8cf;
+		  font-size:20px;
+		  font-weight:bold;
+		  }
 	<!--CSS:news-->
 		.ui-content {
 		padding: 0;
 		margin-top: -15px;
 		}
+	
 	</style>
   <script src="js/jquery.min.js"></script>
   <script>
@@ -261,7 +262,26 @@
         'Thanks for logging in, ' + response.name + '!';
     });
   }
-  
+//script for mainfunction
+
+  function initGeolocation() {
+ if (navigator && navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+        } else {
+            console.log('Geolocation is not supported');
+        }
+}
+ 
+function getlocation() {
+}
+ 
+function successCallback(position) {
+      var mapUrl = "http://maps.google.com/maps/api/staticmap?center=";
+      mapUrl = mapUrl + position.coords.latitude + ',' + position.coords.longitude;
+      mapUrl = mapUrl + '&zoom=15&size=512x512&maptype=roadmap&sensor=false';
+      var imgElement = document.getElementById("static-map");
+      imgElement.src = mapUrl;
+    }
 </script>
 			
   <script type="text/javascript" src="http://connect.facebook.net/zh_TW/all.js"></script>
@@ -288,16 +308,15 @@
 	  </div>
   <!-- Page:mainfunction-->
 	  <div id="mainfunction" data-role="page" style="background:url(img/mainfunc2_bg.jpg); background-size:100% 100%;">
-	  <div data-role="header" data-position="fixed" data-theme="a">
+	  <div data-role="header" data-position="fixed" data-theme="a" style="opacity: 0.0 ;">
 			  <h3>Black Box</h3>
-			  <a class="ui-btn ui-btn-left ui-corner-all ui-shadow" style="color:#808080;" href="#home">back</a>
+			  <a class="ui-btn ui-btn-left ui-corner-all ui-shadow" style="color:#808080; opacity: 1 ;" href="#home">back</a>
 			</div>
 		  <div role="main" class="ui-content">
-			<div data-role="footer" data-position="fixed" data-theme="a">
-			  <h3>Demo</h3>
+		  <div id="map">
+		  		<img id="static-map" src="icon-test1.png" />
+			  <a class="ui-btn" onclick="initGeolocation()">position</a>
 			</div>
-			<img id="dogbody" src="http://i.imgur.com/yS49zqo.gif?1" is="image" height="140" width="210">
-			<img id="doghead" src="http://i.imgur.com/gDkTQmx.gif?1" is="image" height="200" width="280">
 		  </div>
 	   </div>
   <!-- Page:setting-->
@@ -323,9 +342,6 @@
 			<label for="gk-411krYg" style:"text-align:center; ">行駛時自動省電模式</label>
 			<input type="checkbox" data-role="flipswitch" id="gk-411krYg" style:"width:50%;">
 		  </div>
-		</div>
-		<div data-role="footer" data-position="fixed" data-theme="a">
-				<h3>demo</h3>
 		</div>
 	  </div>
     <!-- Page: personinfo  -->
@@ -458,53 +474,39 @@
 
   <!-- Page: home -->
 		<div id="home" data-role="page" data-theme="a" style="background:-webkit-linear-gradient(#bff0f7 10%,#c4dbf5 30%,#e3e6ff)">
-		  <div class="ui-grid-b" >
+		 <div class="ui-grid-b" >
 			<div class="ui-block-a" style="height:80%; margin-top:-20px;">
 			  <a href="#left-menu">
-				<img is="dragable" src="img/home_more_btn.png" style="width:35%; margin:30% 33% 30% 33%; text-align:center">
+				<img is="dragable" src="img/right-arrow.png" style="width:35%; margin:30% 33% 30% 33%; text-align:center">
 			  </a>
-			  <h6 is="gk-text" style="text-align:center; margin-top:-20px;">更多</h6>
+			  <h6 is="gk-text" style="text-align:center; margin-top:-20px;"></h6>
 			</div>
 			<div class="ui-block-b" style="height:100%"></div>
 			<div class="ui-block-c" style="height:100%; margin-top:-20px;">
-			  <a href="#errorpage">
-				<img is="dragable" src="img/home_cloud_btn.png" style="width:35%; margin:30% 33% 30% 33%">
+			  <a href="#right-menu">
+				<img is="dragable" src="img/left-arrow.png" style="width:35%; margin:30% 33% 30% 33%">
 			  </a>
-			  <h6 is="gk-text" style="text-align:center; margin-top:-20px;">平台</h6>
+			  <h6 is="gk-text" style="text-align:center; margin-top:-20px;"></h6>
 			</div>
 		  </div>
-		  <div class="ui-grid-b" style="height:60%; margin-top:-20px;">
+		  <div class="ui-grid-b" style="height:80%; margin-top:-20px;">
 			<a href="#mainfunction">
-			  <img is="dragable" src="img/home_mainfunc_btn.png" style="width:56%; margin:25% 25% 22% 22%">
+			  <img is="dragable" src="img/home_mainfunc_btn.png" style="width:64%; margin:30% 25% 18% 18%">
 			</a>
-		  </div>
-		  <div class="ui-grid-b" style="height:20%">
-			<div class="ui-block-a" style="height:100% ; margin-top:-10px;">
-			  <a href="#personinfo">
-				<img is="dragable" src="img/home_minibb_btn.png" style="width:33%; margin:30% 33% 30% 33%" href="#personbbox">
-			  </a>
-			  <h6 is="gk-text" style="text-align:center; margin-top:-30px;">我的黑盒子</h6>
-			</div>
-			<div class="ui-block-b" style="height:100%"></div>
-			<div class="ui-block-c" style="height:100% ; margin-top:-10px;">
-			  <a href="#setting">
-				<img is="dragable" src="img/home_setting_btn.png" style="width:27%; margin:33% 30% 30% 35%">
-			  </a>
-			  <h6 is="gk-text" style="text-align:center; margin-top:-30px;">設定</h6>
-			</div>
-		  </div>
+		 </div>
 		  <div id="left-menu" data-role="panel" data-position="left" data-theme="b" data-display="push" style="font-family:'微軟正黑體';">
 			<span>更多</span>
-			<a class="ui-btn" data-theme="b" data-rel="close" href="#news">最新消息</a>
-			<a class="ui-btn" data-theme="b" data-rel="close" href="#errorpage">平台</a>
-			<a class="ui-btn" data-theme="b" data-rel="close" href="#personbbox">我的黑盒子</a>
-			<a class="ui-btn" data-theme="b" data-rel="close" href="#dealwaccident">交通事故處理</a>
-			<a class="ui-btn" data-theme="b" data-rel="close" href="#setting">設定</a>
-			<a class="ui-btn" data-theme="b" data-rel="close" href="#login" >登出</a>
+			<img src="img/icon-test1.png" ></br>
+			<img src="img/icon-test2.png" ></br>
+			<img src="img/icon-test3.png" >
 		  </div>
-		  <div role="main" class="ui-content"></div>
+		  <div id="right-menu" data-role="panel" data-position="right" data-theme="b" data-display="push" style="font-family:'微軟正黑體';">
+			<span>更多</span>
+			<img src="img/icon-test4.png" ></br>
+			<img src="img/icon-test5.png" ></br>
+			<img src="img/icon-test6.png" >
+		  </div>
 		</div>
-		
   <!-- Page: dailycontent -->
 		<div id="dailycontent" data-role="page">
 		  <div data-role="header" data-position="fixed" data-theme="b">
