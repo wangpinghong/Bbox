@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<p>test-0429</p>
+
+<button onclick="set()">set</button>
+<button onclick="func()">test</button>
+
+<p id="demo"></p>
+<p id="demo2"></p>
+<p id="demo3"></p>
+
+<script>
+var loca = new Array();
+var coun=0;
+var t ;
+
+function set() {
+    t=new Date();
+    loca.push(t);
+    document.getElementById("demo").innerHTML = loca[coun];
+    coun+=1;
+}
+ 
+function func(){
+    t=new Date();
+    loca.push(t);
+    document.getElementById("demo2").innerHTML = loca[coun];
+    document.getElementById("demo3").innerHTML = loca[coun]-loca[coun-1];
+    coun+=1
+    setTimeout('func()',1000);
+}
+</script>
+
+</body>
+</html>
