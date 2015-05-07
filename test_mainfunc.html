@@ -4,7 +4,7 @@
 
 <p>test-0429</p>
 
-<button onclick="initGeolocation()">set</button>
+<button onclick="setint()">set</button>
 <button onclick="func()">test</button>
 <button onclick="stop()">stop</button>
 <button onclick="show()">show your position</button>
@@ -19,7 +19,7 @@ var loca = new Array();
 var coun=0;
 var t ,a;
 
-function set() {
+function setint() {
     t=new Date();
     loca.push(t);
     document.getElementById("demo").innerHTML = loca[coun];
